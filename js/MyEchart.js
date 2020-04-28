@@ -44,11 +44,14 @@ var MyEchart = {
         }
 
     },
-
+    echartBox: '',
     //初始化echart
     initChart: function(container,option) {
-        echarts.init(document.getElementById(container)).setOption(option);
+        MyEchart.echartBox = echarts.init(document.getElementById(container));
+        MyEchart.echartBox.setOption(option);
+        return MyEchart.echartBox;
     },
+
     theme:{
         color:'',
         axisColor:'',
@@ -75,7 +78,7 @@ var MyEchart = {
     //设置图例
     setLegend: function(obj,data){
         var arr = {
-            show: obj.legend && true,
+            show: obj.legend==false ? obj.legend : true,
             data: data.legend || '',
             right: 0,
             orient:'horizontal',
@@ -120,7 +123,7 @@ var MyEchart = {
     //设置弹出框
     setTooltip: function(obj){
         var arr = {
-            show: obj.tooltip && true,
+            show: obj.tooltip ==false ? obj.tooltip : true,
             trigger: 'item',
             axisPointer: {
                 type: 'line',
@@ -153,6 +156,7 @@ var MyEchart = {
                 lineSeries.areaStyle = {
                     color: obj.areaColor[i]
                 };
+                lineSeries.smooth = obj.smooth || false;
                 lineSeries.stack = 'line';                
                 newSeries.push(extend(datas.series[i], lineSeries));    
             };

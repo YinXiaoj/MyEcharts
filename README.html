@@ -361,11 +361,11 @@ MyEchart<span class="token punctuation">.</span><span class="token function">ini
 </tr>
 <tr>
 <td>legend</td>
-<td>&#x662F;&#x5426;&#x663E;&#x793A;&#x56FE;&#x4F8B;&#xFF08;&#x5E03;&#x5C14;&#x503C;&#xFF09;&#xFF1A;&#x9ED8;&#x8BA4;&#x4E0D;&#x663E;&#x793A;false</td>
+<td>&#x662F;&#x5426;&#x663E;&#x793A;&#x56FE;&#x4F8B;&#xFF08;&#x5E03;&#x5C14;&#x503C;&#xFF09;&#xFF1A;&#x9ED8;&#x8BA4;&#x663E;&#x793A;</td>
 </tr>
 <tr>
 <td>tooltip</td>
-<td>&#x662F;&#x5426;&#x663E;&#x793A;&#x63D0;&#x793A;&#x6846;&#xFF08;&#x5E03;&#x5C14;&#x503C;&#xFF09;&#xFF1A;&#x9ED8;&#x8BA4;&#x4E0D;&#x663E;&#x793A;false</td>
+<td>&#x662F;&#x5426;&#x663E;&#x793A;&#x63D0;&#x793A;&#x6846;&#xFF08;&#x5E03;&#x5C14;&#x503C;&#xFF09;&#xFF1A;&#x9ED8;&#x8BA4;&#x663E;&#x793A;</td>
 </tr>
 </tbody>
 </table>
@@ -394,6 +394,10 @@ MyEchart<span class="token punctuation">.</span><span class="token function">ini
 <td>areaColor</td>
 <td>&#x6298;&#x7EBF;&#x533A;&#x57DF;&#x989C;&#x8272;</td>
 </tr>
+<tr>
+<td>smooth</td>
+<td>&#x662F;&#x5426;&#x5E73;&#x6ED1;&#x66F2;&#x7EBF;&#xFF0C;&#x9ED8;&#x8BA4;false</td>
+</tr>
 </tbody>
 </table>
 <pre data-role="codeBlock" data-info="js" class="language-javascript"><span class="token keyword">var</span> option <span class="token operator">=</span> MyEchart<span class="token punctuation">.</span>optionTemplates<span class="token punctuation">.</span><span class="token function">line</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
@@ -401,7 +405,8 @@ MyEchart<span class="token punctuation">.</span><span class="token function">ini
     data<span class="token punctuation">:</span>data<span class="token punctuation">,</span>
     title<span class="token punctuation">:</span><span class="token string">&apos;&#x7EDF;&#x8BA1;&apos;</span><span class="token punctuation">,</span>
     lineColor<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">&apos;#339ae5&apos;</span><span class="token punctuation">,</span><span class="token string">&apos;#f38051&apos;</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
-    areaColor<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">&apos;#339ae5&apos;</span><span class="token punctuation">,</span><span class="token string">&apos;#f38051&apos;</span><span class="token punctuation">]</span>
+    areaColor<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">&apos;#339ae5&apos;</span><span class="token punctuation">,</span><span class="token string">&apos;#f38051&apos;</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+    smooth<span class="token punctuation">:</span><span class="token boolean">true</span>
 <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 </pre><h3 class="mume-header" id="%E6%9F%B1%E7%8A%B6%E5%9B%BE">&#x67F1;&#x72B6;&#x56FE;</h3>
 
@@ -480,11 +485,29 @@ MyEchart<span class="token punctuation">.</span><span class="token function">ini
     textColor<span class="token punctuation">:</span> <span class="token string">&apos;#333&apos;</span> <span class="token comment">// &#x6587;&#x5B57;&#x989C;&#x8272;</span>
 <span class="token punctuation">}</span>
 MyEchart<span class="token punctuation">.</span><span class="token function">setTheme</span><span class="token punctuation">(</span>theme<span class="token punctuation">)</span><span class="token punctuation">;</span>
-</pre><h2 class="mume-header" id="%E5%85%B6%E4%BB%96">&#x5176;&#x4ED6;</h2>
+</pre><h2 class="mume-header" id="%E6%89%A9%E5%B1%95">&#x6269;&#x5C55;</h2>
 
-<ol>
-<li>&#x6E10;&#x53D8;&#x989C;&#x8272;&#xFF1A;&#x53C2;&#x8003;Echart&#x89C4;&#x5219;&#xFF0C;&#x6CE8;&#xFF1A;IE8&#x4E0D;&#x652F;&#x6301;&#x6E10;&#x53D8;</li>
-</ol>
+<p>&#x9700;&#x8981;&#x5176;&#x4ED6;&#x66F4;&#x52A0;&#x590D;&#x6742;&#x7684;&#x914D;&#x7F6E;&#x9879;&#xFF0C;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;echart&#x7684;<code>setOption()</code>&#x65B9;&#x6CD5;&#x6DFB;&#x52A0;&#xFF0C;&#x4F8B;&#x5982;&#xFF1A;</p>
+<pre data-role="codeBlock" data-info="js" class="language-javascript"><span class="token keyword">var</span> option <span class="token operator">=</span> MyEchart<span class="token punctuation">.</span>optionTemplates<span class="token punctuation">.</span><span class="token function">line</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+    type<span class="token punctuation">:</span><span class="token string">&apos;line&apos;</span><span class="token punctuation">,</span>
+    data<span class="token punctuation">:</span>data<span class="token punctuation">,</span>
+    title<span class="token punctuation">:</span><span class="token string">&apos;&#x7EDF;&#x8BA1;&apos;</span><span class="token punctuation">,</span>
+    smooth<span class="token punctuation">:</span><span class="token boolean">true</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">var</span> echart <span class="token operator">=</span> MyEchart<span class="token punctuation">.</span><span class="token function">initChart</span><span class="token punctuation">(</span><span class="token string">&apos;echartbox&apos;</span><span class="token punctuation">,</span> option<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">//&#x6DFB;&#x52A0;&#x5176;&#x4ED6;&#x914D;&#x7F6E;&#x9879;</span>
+<span class="token keyword">var</span> option_other <span class="token operator">=</span> <span class="token punctuation">{</span>
+    grid<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+        left<span class="token punctuation">:</span> <span class="token string">&apos;0&apos;</span><span class="token punctuation">,</span>
+        right<span class="token punctuation">:</span> <span class="token string">&apos;0&apos;</span><span class="token punctuation">,</span>
+        bottom<span class="token punctuation">:</span> <span class="token string">&apos;0&apos;</span><span class="token punctuation">,</span>
+        containLabel<span class="token punctuation">:</span> <span class="token boolean">true</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+echart<span class="token punctuation">.</span><span class="token function">setOption</span><span class="token punctuation">(</span>option_other<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</pre><h2 class="mume-header" id="%E6%B8%90%E5%8F%98%E9%A2%9C%E8%89%B2">&#x6E10;&#x53D8;&#x989C;&#x8272;</h2>
+
+<p>&#x53C2;&#x8003;Echart&#x89C4;&#x5219;&#xFF0C;&#x6CE8;&#xFF1A;IE8&#x4E0D;&#x652F;&#x6301;&#x6E10;&#x53D8;</p>
 <pre data-role="codeBlock" data-info="js" class="language-javascript"><span class="token keyword">new</span> <span class="token class-name">echarts<span class="token punctuation">.</span>graphic<span class="token punctuation">.</span>LinearGradient</span><span class="token punctuation">(</span>
     <span class="token number">0</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token comment">// 0,1,0,0&#x4ECE;&#x4E0B;&#x5230;&#x4E0A;&#xFF0C; 0,0,0,1&#x4ECE;&#x4E0A;&#x5230;&#x4E0B;&#xFF0C;0,0,1,0&#x4ECE;&#x5DE6;&#x5230;&#x53F3;&#xFF0C;1,0,0,0&#x4ECE;&#x53F3;&#x5230;&#x5DE6;</span>
     <span class="token punctuation">[</span>
@@ -507,7 +530,10 @@ MyEchart<span class="token punctuation">.</span><span class="token function">set
         <span class="token punctuation">)</span>
     <span class="token punctuation">]</span>
 <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-</pre>
+</pre><h2 class="mume-header" id="%E5%BE%85%E5%BC%80%E5%8F%91">&#x5F85;&#x5F00;&#x53D1;</h2>
+
+<p>&#x5730;&#x56FE;&#x5C01;&#x88C5;</p>
+
       </div>
       
       

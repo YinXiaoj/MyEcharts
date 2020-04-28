@@ -83,8 +83,8 @@ data|数据（必填）
 title|标题
 axisColor|坐标轴颜色
 textColor|文字颜色
-legend|是否显示图例（布尔值）：默认不显示false
-tooltip|是否显示提示框（布尔值）：默认不显示false
+legend|是否显示图例（布尔值）：默认显示
+tooltip|是否显示提示框（布尔值）：默认显示
 
 - 标题默认为空
 - 文字和图形的颜色使用Echart默认调色盘，也可以自定义
@@ -97,6 +97,7 @@ tooltip|是否显示提示框（布尔值）：默认不显示false
 -|-
 lineColor|折线颜色
 areaColor|折线区域颜色
+smooth|是否平滑曲线，默认false
 
 ```js
 var option = MyEchart.optionTemplates.line({
@@ -104,7 +105,8 @@ var option = MyEchart.optionTemplates.line({
     data:data,
     title:'统计',
     lineColor: ['#339ae5','#f38051'],
-    areaColor: ['#339ae5','#f38051']
+    areaColor: ['#339ae5','#f38051'],
+    smooth:true
 });
 ```
 
@@ -161,9 +163,33 @@ var theme = {
 }
 MyEchart.setTheme(theme);
 ```
-## 其他
 
-1. 渐变颜色：参考Echart规则，注：IE8不支持渐变
+## 扩展
+需要其他更加复杂的配置项，可以使用echart的`setOption()`方法添加，例如：
+
+```js
+var option = MyEchart.optionTemplates.line({
+    type:'line',
+    data:data,
+    title:'统计',
+    smooth:true
+});
+var echart = MyEchart.initChart('echartbox', option);
+//添加其他配置项
+var option_other = {
+    grid: {
+        left: '0',
+        right: '0',
+        bottom: '0',
+        containLabel: true
+    }
+}
+echart.setOption(option_other);
+```
+
+## 渐变颜色
+
+参考Echart规则，注：IE8不支持渐变
 
 ```js
 new echarts.graphic.LinearGradient(
@@ -192,4 +218,8 @@ var option = MyEchart.optionTemplates.bar({
     ]
 });
 ```
+
+## 待开发
+
+地图封装
 

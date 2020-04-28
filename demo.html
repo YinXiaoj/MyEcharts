@@ -5,15 +5,35 @@
 <title>无标题文档</title>
 <style>
 .echartBox{width: 500px; height: 400px; float: left;}
+.demo_title{ font-size: 28px; color: #1f2f3d;}
+.demo_title_sub{margin: 55px 0 20px; font-size: 22px; color: #1f2f3d;}
+.demo_block{border: 1px solid #ebebeb; border-radius:4px;}
+.demo_block_view{padding: 20px;}
+.demo_block_code{border-top:1px solid #eaeefb;background-color:#fafafa; display: none;}
+.demo_block_code textarea{width: 100%; height: 200px;}
 </style>
 </head>
 
-<body>
+<body style="padding: 20px;">
+<h2 class="demo_title">Echarts二次封装</h2>
+<h3 class="demo_title_sub">折线图</h3>
+<div style="overflow: hidden;">
+   <div id="echart1" class="echartBox"></div>
+   <div id="echart2" class="echartBox"></div>
+</div>
 
-<div id="echart1" class="echartBox"></div>
-<div id="echart2" class="echartBox"></div>
-<div id="echart3" class="echartBox"></div>
-<div id="echart4" class="echartBox"></div>
+<h3 class="demo_title_sub">柱状图</h3>
+<div style="overflow: hidden;">
+   <div id="echart3" class="echartBox"></div>
+   <div id="echart4" class="echartBox"></div>
+</div>
+
+<h3 class="demo_title_sub">饼图</h3>
+<div style="overflow: hidden;">
+   <div id="echart5" class="echartBox"></div>
+   <div id="echart6" class="echartBox"></div>
+</div>
+
  
 </body>
 <script src="js/echarts.min.js"></script>

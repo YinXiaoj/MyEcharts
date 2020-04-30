@@ -41,9 +41,9 @@ MyEchart.initChart('echartbox', option);
 
 # API配置项说明
 
-基础图形：API.md
+基础图形：[API.md](API.md)
 
-地图配置：API-map.md
+地图配置：[API-map.md](API-map.md)
 
 # DEMO
 

@@ -105,5 +105,24 @@ var option6 = MyEchart.optionTemplates.pie({
 MyEchart.initChart('echart6', option6);
 
 
-
-
+var mapData = [
+    {name:'北京', size:20, color:'#ff2136'},
+    {name:'上海', size:30, color:'#8de2a2'},
+    {name:'湖北', size:10, color:'#ffa63d'}
+]
+var mapbox = MyMap.initChart('mapChart','china',{
+    data:mapData,
+    label:true,
+    labelColor:'#fff',
+    labelColorHover:'#ff0',
+    areaColor:'#12427b',
+    areaColorHover:'#5183f6',
+    borderColor: '#4e80f0',
+    maskType:'scatter'
+    //maskType:'effectScatter' 
+    // 
+    
+});
+mapbox.on('click',function(data){
+    console.log(data)
+})

@@ -1,3 +1,8 @@
+/*
+title: Echart二次封装
+author: yinxiaojing
+API：https://github.com/YinXiaoj/MyEcharts
+*/
 
 //定义MyEchart
 var MyEchart = {
@@ -47,9 +52,9 @@ var MyEchart = {
     echartBox: '',
     //初始化echart
     initChart: function(container,option) {
-        MyEchart.echartBox = echarts.init(document.getElementById(container));
-        MyEchart.echartBox.setOption(option);
-        return MyEchart.echartBox;
+        this.echartBox = echarts.init(document.getElementById(container));
+        this.echartBox.setOption(option);
+        return this.echartBox;
     },
 
     theme:{
@@ -59,9 +64,9 @@ var MyEchart = {
     },
     //配置主题
     setTheme: function(obj){
-        MyEchart.theme.color = obj.color;
-        MyEchart.theme.axisColor = obj.axisColor;
-        MyEchart.theme.textColor = obj.textColor;
+        this.theme.color = obj.color;
+        this.theme.axisColor = obj.axisColor;
+        this.theme.textColor = obj.textColor;
     },
     //设置标题
     setTitle: function(obj){
@@ -139,20 +144,21 @@ var MyEchart = {
     },
     //初始化option
     optionTemplates: {
+        self: this,
         //折线图
         line: function(obj) {
-            var datas = MyEchart.FormateDataGroup(obj.data, obj.type);
+            var datas = self.FormateDataGroup(obj.data, obj.type);
             var newSeries = [];
             for(var i=0; i<datas.series.length; i++){
                 var lineSeries = {};
-                obj.lineColor = obj.lineColor || (MyEchart.theme.color || '');
+                obj.lineColor = obj.lineColor || (self.theme.color || '');
                 lineSeries.itemStyle = {
                     color: obj.lineColor[i]
                 };
                 lineSeries.lineStyle = {
                     color: obj.lineColor[i]
                 };
-                obj.areaColor = obj.areaColor || (MyEchart.theme.color || '');      
+                obj.areaColor = obj.areaColor || (self.theme.color || '');      
                 lineSeries.areaStyle = {
                     color: obj.areaColor[i]
                 };
@@ -161,22 +167,22 @@ var MyEchart = {
                 newSeries.push(extend(datas.series[i], lineSeries));    
             };
             var option = {
-                title: MyEchart.setTitle(obj),
-                legend: MyEchart.setLegend(obj,datas),
-                tooltip: MyEchart.setTooltip(obj),
-                xAxis: MyEchart.setxAxis(obj,datas),
-                yAxis: MyEchart.setyAxis(obj),
+                title: self.setTitle(obj),
+                legend: self.setLegend(obj,datas),
+                tooltip: self.setTooltip(obj),
+                xAxis: self.setxAxis(obj,datas),
+                yAxis: self.setyAxis(obj),
                 series: newSeries
             };
             return option;
         },
         //柱状图
         bar: function(obj) {
-            var datas = MyEchart.FormateDataGroup(obj.data, obj.type);
+            var datas = self.FormateDataGroup(obj.data, obj.type);
             var newSeries = [];
             for(var i=0; i< datas.series.length; i++){              
                 var lineSeries = {};
-                obj.color = obj.color || (MyEchart.theme.color || '');
+                obj.color = obj.color || (self.theme.color || '');
                 lineSeries.itemStyle = {
                     color: obj.color[i] || obj.color
                 };      
@@ -186,28 +192,28 @@ var MyEchart = {
                 newSeries.push(extend(datas.series[i], lineSeries));                
             };
             var option = {
-                title: MyEchart.setTitle(obj),
-                legend: MyEchart.setLegend(obj,datas),
-                tooltip: MyEchart.setTooltip(obj),
-                xAxis: MyEchart.setxAxis(obj,datas),
-                yAxis: MyEchart.setyAxis(obj),
+                title: self.setTitle(obj),
+                legend: self.setLegend(obj,datas),
+                tooltip: self.setTooltip(obj),
+                xAxis: self.setxAxis(obj,datas),
+                yAxis: self.setyAxis(obj),
                 series: newSeries
             };
             return option;
         },
         //饼图
         pie: function(obj) {
-            var datas = MyEchart.FormateDataGroup(obj.data, obj.type);
+            var datas = self.FormateDataGroup(obj.data, obj.type);
             var pieSeries = {
                 radius: obj.radius,
                 center: obj.center,
-                color: obj.color || (MyEchart.theme.color || []),
+                color: obj.color || (self.theme.color || []),
             };
             var newSeries = [extend(datas.series[0], pieSeries)];
             var option = {
-                title: MyEchart.setTitle(obj),
-                legend: MyEchart.setLegend(obj,datas),
-                tooltip: MyEchart.setTooltip(obj),
+                title: self.setTitle(obj),
+                legend: self.setLegend(obj,datas),
+                tooltip: self.setTooltip(obj),
                 series: newSeries
             };
             return option;

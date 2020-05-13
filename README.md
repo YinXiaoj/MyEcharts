@@ -31,7 +31,7 @@ var data= [
     {name: '周日', value: 120}
 ];
 //传入所需参数
-var option = MyEchart.optionTemplates.line({
+var option = MyEchart.optionTemplates('line', {
     type:'line',
     data:data
 });

@@ -35,37 +35,41 @@ var theme = {
 MyEchart.setTheme(theme);
 
 
-var option1 = MyEchart.optionTemplates.line({
+var option1 = MyEchart.optionTemplates('line',{
     type:'line',
     data:data1,
     title:'折线图单组数据',
+    grid: ["16%", "3%", "3%", "3%"],
     smooth:true
 });
 MyEchart.initChart('echart1', option1);
 
 
-var option2 = MyEchart.optionTemplates.line({
+var option2 = MyEchart.optionTemplates('line',{
     type:'line',
     data:data2,
-    title:'折线图多组数据'
+    title:'折线图多组数据',
+    grid: ["16%", "3%", "3%", "3%"]
 });
 MyEchart.initChart('echart2', option2);
 
 
-var option3 = MyEchart.optionTemplates.bar({
+var option3 = MyEchart.optionTemplates('bar',{
     type:'bar',
     data:data1,
     title:'柱状图自定义颜色和柱条宽度',
+    grid: ["16%", "3%", "3%", "3%"],
     color: ['#a24e9c'],
     barWidth:20
 });
 MyEchart.initChart('echart3', option3);
 
 
-var option4 = MyEchart.optionTemplates.bar({
+var option4 = MyEchart.optionTemplates('bar',{
     type:'bar',
     data:data2,
     title:'柱状图渐变颜色',
+    grid: ["16%", "3%", "3%", "3%"],
     color: [
         new echarts.graphic.LinearGradient(
             0,1,0,0,
@@ -85,7 +89,7 @@ var option4 = MyEchart.optionTemplates.bar({
 });
 MyEchart.initChart('echart4', option4);
 
-var option5 = MyEchart.optionTemplates.pie({
+var option5 = MyEchart.optionTemplates('pie',{
     type:'pie',
     data:data1,
     title:'饼图',
@@ -95,7 +99,7 @@ var option5 = MyEchart.optionTemplates.pie({
 MyEchart.initChart('echart5', option5);
 
 
-var option6 = MyEchart.optionTemplates.pie({
+var option6 = MyEchart.optionTemplates('pie',{
     type:'pie',
     data:data1,
     title:'饼图圆环',
@@ -103,6 +107,29 @@ var option6 = MyEchart.optionTemplates.pie({
     center : ['50%', '45%']
 });
 MyEchart.initChart('echart6', option6);
+
+var option7 = MyEchart.optionTemplates('radar',{
+    type:'radar',
+    data:data2,
+    title: '多组数据雷达图',
+    radius: 100,
+    center: ['50%', '50%'],
+    axisColor: '#495e74',
+   // textColor: '#50a5d3',
+    color:['#5874c8', '#ff6695'],
+    areaColor:['#5874c8', '#ff6695']
+});
+MyEchart.initChart('echart7', option7);
+
+var option8 = MyEchart.optionTemplates('radar',{
+    type:'radar',
+    data:data1,
+    title: '单组数据雷达图',
+    radius: 100,
+    center: ['50%', '50%']
+});
+console.log(option8)
+MyEchart.initChart('echart8', option8);
 
 
 var mapData = [

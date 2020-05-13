@@ -44,13 +44,20 @@ axisColor|坐标轴颜色
 textColor|文字颜色
 legend|是否显示图例（布尔值）：默认显示
 tooltip|是否显示提示框（布尔值）：默认显示
+grid|grid的位置，分别为[上， 右， 下， 左]，默认为['3%', '3%', '3%', '3%']
 
 - 标题默认为空
 - 文字和图形的颜色使用Echart默认调色盘，也可以自定义
 
-### 折线图
+### 配置option
 
-- 使用`MyEchart.optionTemplates.line()`方法传参
+- 使用`MyEchart.optionTemplates(type, obj)`方法
+
+- type: 图表类型：line，bar，pie（必填，目前只支持这三种）
+
+- obj：option对象
+
+### 折线图
 
 属性|描述
 -|-
@@ -59,7 +66,7 @@ areaColor|折线区域颜色
 smooth|是否平滑曲线，默认false
 
 ```js
-var option = MyEchart.optionTemplates.line({
+var option = MyEchart.optionTemplates('line', {
     type:'line',
     data:data,
     title:'统计',
@@ -71,15 +78,13 @@ var option = MyEchart.optionTemplates.line({
 
 ### 柱状图
 
-- 使用`MyEchart.optionTemplates.bar()`方法传参
-
 属性|描述
 -|-
 color|柱条的颜色
 barWidth|柱条的宽度：默认自适应
 
 ```js
-var option = MyEchart.optionTemplates.bar({
+var option = MyEchart.optionTemplates('bar', {
     type:'bar',
     data:data,
     title:'统计',
@@ -90,8 +95,6 @@ var option = MyEchart.optionTemplates.bar({
 
 ### 饼图
 
-- 使用`MyEchart.optionTemplates.pie()`方法传参
-
 属性|描述
 -|-
 color|图形的颜色
@@ -99,13 +102,36 @@ radius|饼图的半径：`'50%'`直接指定外半径尺寸，显示饼图。`[4
 center|饼图的中心坐标：`['50%','50%']`第一项横坐标，第二项纵坐标
 
 ```js
-var option = MyEchart.optionTemplates.pie({
+var option = MyEchart.optionTemplates('pie', {
     type:'pie',
     data:data,
     title:'统计',
     color: ['#339ae5','#f38051','#5874c8','#fef15e','#ff6695','#a24e9c','#f7d085']
     radius : '55%',
     center : ['50%', '50%']
+});
+```
+
+### 雷达图
+
+属性|描述
+-|-
+color|图形的颜色
+areaColor|图形区域的颜色
+radius|图形的半径
+center|图形的中心坐标：`['50%','50%']`第一项横坐标，第二项纵坐标
+axisColor|坐标轴的颜色
+
+```js
+var option = MyEchart.optionTemplates('radar',{
+    type:'radar',
+    data:data,
+    title: '统计',
+    radius: 100,
+    center: ['50%', '50%'],
+    axisColor: '#495e74',
+    color:['#5874c8', '#ff6695'],
+    areaColor:['#5874c8', '#ff6695']
 });
 ```
 
@@ -127,20 +153,29 @@ MyEchart.setTheme(theme);
 需要其他更加复杂的配置项，可以使用echart的`setOption()`方法添加，例如：
 
 ```js
-var option = MyEchart.optionTemplates.line({
-    type:'line',
+var option = MyEchart.optionTemplates.pie({
+    type:'pie',
     data:data,
     title:'统计',
-    smooth:true
+    radius : '55%',
+    center : ['50%', '50%']
 });
 var echart = MyEchart.initChart('echartbox', option);
 //添加其他配置项
 var option_other = {
-    grid: {
-        left: '0',
-        right: '0',
-        bottom: '0',
-        containLabel: true
+    legend: {
+        left: '10%',
+        top: '10%',
+        right: 'auto'
+    },
+    series: {
+        type: 'pie',
+        labelLine: {
+            length2: 0
+        },
+        label: {
+            formatter: '{b} {d}%'
+        }
     }
 }
 echart.setOption(option_other);
@@ -162,7 +197,7 @@ new echarts.graphic.LinearGradient(
 
 ```js
 // 可以直接使用
-var option = MyEchart.optionTemplates.bar({
+var option = MyEchart.optionTemplates('bar',{
     type:'bar',
     data:data,
     title:'统计',
@@ -177,8 +212,4 @@ var option = MyEchart.optionTemplates.bar({
     ]
 });
 ```
-
-## 待开发
-
-地图封装
 

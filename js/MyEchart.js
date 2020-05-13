@@ -21,8 +21,22 @@ var MyEchart = {
                     categories.push(data[i].name);
                 }
             }
-            
-            for (var i = 0; i < groups.length; i++) {
+            if(type == 'radar'){
+                series.push({ type: 'radar', data: []});
+
+                for (var i = 0; i < groups.length; i++) {
+                    var temp_data = [];
+                    for (var j = 0; j < data.length; j++) {
+                        for (var k = 0; k < categories.length; k++){
+                            if (groups[i] == data[j].group && data[j].name == categories[k])
+                                temp_data.push(data[j].value);
+                        }                   
+                    }
+                    series[0].data.push({ name: groups[i], value: temp_data });    
+                }
+                return { category: categories, series: series };
+            }else{
+              for (var i = 0; i < groups.length; i++) {
                 var temp_data = [];
                 for (var j = 0; j < data.length; j++) {
                     for (var k = 0; k < categories.length; k++){
@@ -31,8 +45,10 @@ var MyEchart = {
                     }                   
                 }
                 series.push( { name: groups[i], type: type, data: temp_data });    
+              }
+              return { legend: groups, category: categories, series: series };
             }
-            return { legend: groups, category: categories, series: series };
+
 
         } else {
             var temp_data = [];
@@ -44,7 +60,12 @@ var MyEchart = {
                     temp_data.push(data[i].value);
                 }                  
             }
-            series.push({ data: temp_data, type: type});
+            if(type == 'radar'){
+                series.push({ type: 'radar', data: [{ name: '', value: temp_data }]});
+                
+            } else {
+               series.push({ data: temp_data, type: type});
+            }
             return { category: categories, series: series };
         }
 
@@ -88,10 +109,10 @@ var MyEchart = {
             right: 0,
             orient:'horizontal',
             textStyle: {
-                color: obj.textColor || '#000'
+                color: obj.color || '#000'
             }
         };
-        if(obj.type == 'pie'){
+        if(obj.type == 'pie' || obj.type == 'radar'){
             arr.orient = 'vertical'
         }
         return arr;       
@@ -106,6 +127,14 @@ var MyEchart = {
                 lineStyle: {
                     color: obj.axisColor || '#000'
                 }
+            },
+            splitLine: {
+                lineStyle: {
+                    color: obj.axisColor || '#000'
+                }
+            },
+            axisLabel: {
+                color: obj.textColor || '#000'
             }
         };
         if(obj.type == 'line'){
@@ -121,6 +150,14 @@ var MyEchart = {
                 lineStyle: {
                     color: obj.axisColor || '#000'
                 }
+            },
+            splitLine: {
+                lineStyle: {
+                    color: obj.axisColor || '#000'
+                }
+            },
+            axisLabel: {
+                color: obj.textColor || '#000'
             }
         };
         return arr;   
@@ -137,16 +174,73 @@ var MyEchart = {
                 }
             }
         };
-        if(obj.type == 'line'){
+        if(obj.type == 'line' || obj.type == 'radar'){
             arr.trigger = 'axis'
         }
         return arr;   
     },
+    // 设置雷达图坐标系
+    setRadar: function(obj, data){
+        var list = [];
+        var self = this;
+        for(var i=0; i<data.length; i++) {
+            list.push({name: data[i]})
+        }
+        var arr = [
+            {
+                indicator: list,
+                radius: obj.radius,
+                center: obj.center,
+                nameGap: 4, 
+                name: {
+                    formatter:'{value}',
+                    textStyle: {
+                        color: obj.textColor || (self.theme.textColor || '')
+                    }
+                },
+                axisLine: {
+                    lineStyle: {
+                        color: obj.axisColor || (self.theme.axisColor || '')
+                    }
+                },
+                splitLine: {
+                    lineStyle: {
+                        color: obj.axisColor || (self.theme.axisColor || '')
+                    }
+                },
+                splitArea: {
+                    areaStyle: {
+                        color: 'none'
+                   
+                    }
+                }
+            },
+            
+        ];
+        return arr;
+    },
     //初始化option
-    optionTemplates: {
-        self: this,
+    optionTemplates: function(type, obj){
+        var self = this;
+        var option;
+        switch(type) {
+            case 'line':
+                line(obj);
+                break;
+            case 'bar':
+                bar(obj);
+                break;
+            case 'pie':
+                pie(obj);
+                break;
+            case 'radar':
+                radar(obj);
+                break;
+        };
+        return option;
+        
         //折线图
-        line: function(obj) {
+        function line(obj) {
             var datas = self.FormateDataGroup(obj.data, obj.type);
             var newSeries = [];
             for(var i=0; i<datas.series.length; i++){
@@ -166,7 +260,14 @@ var MyEchart = {
                 lineSeries.stack = 'line';                
                 newSeries.push(extend(datas.series[i], lineSeries));    
             };
-            var option = {
+            option = {
+                grid: {
+                    top: obj.grid ? obj.grid[0] : '3%',
+                    right: obj.grid ? obj.grid[1] : '3%',
+                    bottom: obj.grid ? obj.grid[2] : '3%',
+                    left: obj.grid ? obj.grid[3] : '3%',
+                    containLabel: true
+                },
                 title: self.setTitle(obj),
                 legend: self.setLegend(obj,datas),
                 tooltip: self.setTooltip(obj),
@@ -174,10 +275,9 @@ var MyEchart = {
                 yAxis: self.setyAxis(obj),
                 series: newSeries
             };
-            return option;
-        },
+        };
         //柱状图
-        bar: function(obj) {
+        function bar(obj) {
             var datas = self.FormateDataGroup(obj.data, obj.type);
             var newSeries = [];
             for(var i=0; i< datas.series.length; i++){              
@@ -191,7 +291,14 @@ var MyEchart = {
                 };
                 newSeries.push(extend(datas.series[i], lineSeries));                
             };
-            var option = {
+            option = {
+                grid: {
+                    top: obj.grid ? obj.grid[0] : '3%',
+                    right: obj.grid ? obj.grid[1] : '3%',
+                    bottom: obj.grid ? obj.grid[2] : '3%',
+                    left: obj.grid ? obj.grid[3] : '3%',
+                    containLabel: true
+                },
                 title: self.setTitle(obj),
                 legend: self.setLegend(obj,datas),
                 tooltip: self.setTooltip(obj),
@@ -199,10 +306,9 @@ var MyEchart = {
                 yAxis: self.setyAxis(obj),
                 series: newSeries
             };
-            return option;
-        },
+        };
         //饼图
-        pie: function(obj) {
+        function pie(obj) {
             var datas = self.FormateDataGroup(obj.data, obj.type);
             var pieSeries = {
                 radius: obj.radius,
@@ -210,14 +316,43 @@ var MyEchart = {
                 color: obj.color || (self.theme.color || []),
             };
             var newSeries = [extend(datas.series[0], pieSeries)];
-            var option = {
+            option = {
                 title: self.setTitle(obj),
                 legend: self.setLegend(obj,datas),
                 tooltip: self.setTooltip(obj),
                 series: newSeries
+            }; 
+        };
+        // 雷达图
+        function radar(obj){
+            var datas = self.FormateDataGroup(obj.data, obj.type);
+            var datav = datas.series[0].data;
+            var newSeries = [];
+            for(var i=0; i< datav.length; i++){              
+                var lineSeries = {};
+                obj.color = obj.color || (self.theme.color || '');
+                obj.areaColor = obj.areaColor || (self.theme.color || '');
+                lineSeries.itemStyle = {
+                    color: obj.color[i] || obj.color
+                };
+                lineSeries.areaStyle = {
+                    type: 'default',
+                    color: obj.areaColor[i] || obj.areaColor
+				};
+                lineSeries.lineStyle = {
+					color: obj.color[i] || obj.color
+				}
+                newSeries.push(extend(datav[i], lineSeries));                
             };
-            return option;
-        },
+            datas.series.data = newSeries;
+            option = {
+                title: self.setTitle(obj),
+                legend: self.setLegend(obj,datas),
+                tooltip: self.setTooltip(obj),
+                radar: self.setRadar(obj,datas.category)[0],
+                series: datas.series
+            }
+        }
     }  
 }
 

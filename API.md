@@ -37,7 +37,7 @@ var data= [
 
 属性|描述
 -|-
-type|图表类型：line，bar，pie（必填，目前只支持这三种）
+type|图表类型：line，bar，pie，radar（必填，目前只支持这四种）
 data|数据（必填）
 title|标题
 axisColor|坐标轴颜色
@@ -53,7 +53,7 @@ grid|grid的位置，分别为[上， 右， 下， 左]，默认为['3%', '3%',
 
 - 使用`MyEchart.optionTemplates(type, obj)`方法
 
-- type: 图表类型：line，bar，pie（必填，目前只支持这三种）
+- type: 图表类型：line，bar，pie，radar（必填，目前只支持这四种）
 
 - obj：option对象
 
